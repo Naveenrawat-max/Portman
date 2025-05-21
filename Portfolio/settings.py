@@ -28,7 +28,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False  # Set to False in production
 
-ALLOWED_HOSTS = ['*.vercel.com','*.vercel.app','127.0.0.1','.now.sh']  # Change this in production
+ALLOWED_HOSTS = ['127.0.0.1','.now.sh']  # Change this in production
 
 
 # Application definition
@@ -61,6 +61,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # must be here
+
     # 'django_browser_reload.middleware.BrowserReloadMiddleware',
     
  
