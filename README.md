@@ -1,0 +1,2 @@
+# Portman
+# PORTMAN - Portfolio Manager  PORTMAN is a scalable and user-friendly web application designed to help individuals manage and showcase their professional portfolios online. It provides users with the ability to:  - Register and log in securely - Create and manage a detailed profile - Add, update, and display projects, skills, education, and work experiences - Upload profile images and portfolio media - Link social media accounts for personal branding - Explore and interact with other users' public portfolios
