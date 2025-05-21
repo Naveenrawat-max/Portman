@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% block title %}Home page{% endblock %}
+
+{% block content %}
+<div class="py-12">
+    <div class="text-center mb-12">
+        <h1 class="text-4xl font-bold text-cyan-400 glow-text mt-6">Welcome to Portman</h1>
+        <p class="text-gray-300 text-lg mb-6 max-w-2xl mx-auto">Your personalized portfolio manager at your fingertips.
+            Showcase your skills, projects, and experience with a modern, professional profile.</p>
+    </div>
+
+    <!-- Featured Profiles Section -->
+    <div class="mb-16">
+        <h2 class="text-2xl font-bold text-cyan-400 mb-8 flex items-center">
+            <i class="fas fa-star mr-2"></i> Featured Profiles
+        </h2>
+
+        <!-- User Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for u in users %}
+            <div class="glass-card transform hover:scale-105 transition duration-300">
+                <div class="p-6">
+                    <div class="flex items-center space-x-4 mb-4">
+                        <div class="w-20 h-20 rounded-full overflow-hidden border-4 border-cyan-500 glow">
+                            {% if u.profile.image %}
+                            <img src="{{ u.profile.image.url }}" alt="User Image" class="w-full h-full object-cover">
+                            {% else %}
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed={{ u.username }}" alt="User Icon"
+                                class="w-full h-full object-cover">
+                            {% endif %}
+                        </div>
+                        <div class="text-left">
+                            <h2 class="text-xl font-semibold text-white">{{ u.username|title }}</h2>
+                            <p class="text-sm text-gray-300">{{ u.email }}</p>
+                        </div>
+                    </div>
+                    <div class="mb-4 text-sm text-gray-300 h-16 overflow-hidden">
+                        {% if u.profile.bio %}<p class="italic">"{{ u.profile.bio }}"</p>{% else %}<p
+                            class="italic text-gray-500">No bio yet.</p>{% endif %}
+                    </div>
+                    <a href="/profile/{{ u.username }}"
+                        class="btn-primary inline-block py-2 px-4 rounded-lg text-center w-full">View Profile</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- All Profiles Section -->
+    <div>
+        <h2 class="text-2xl font-bold text-cyan-400 mb-8 flex items-center">
+            <i class="fas fa-users mr-2"></i> All Profiles
+        </h2>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            {% for user in profiles %}
+            <div
+                class="glass-card overflow-hidden transition-all duration-300 transform hover:scale-105 hover:shadow-xl">
+                <a href="{% url 'user_details' user.id %}" class="block">
+                    <div class="p-6 flex flex-col items-center">
+                        <div class="w-24 h-24 rounded-full overflow-hidden mb-4 border-4 border-cyan-500 glow">
+                            {% if user.profile_picture %}
+                            <img class="w-full h-full object-cover" src="{{ user.profile_picture.url }}"
+                                alt="{{ user.user }}'s profile image" />
+                            {% else %}
+                            <div class="w-full h-full flex items-center justify-center bg-gray-700 text-gray-300">
+                                <i class="fas fa-user text-3xl"></i>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <h2 class="text-xl font-bold text-white capitalize mb-2">{{ user.user }}</h2>
+                        <ul class="text-sm text-gray-300 space-y-2 text-center">
+                            {% for experience in user.work_experiences.all %}
+                            <li class="flex flex-col justify-center items-center">
+                                <strong class="text-gray-100">{{ experience.position }}</strong>
+                                <span class="text-gray-400">at <em>{{ experience.company_name }}</em></span>
+                            </li>
+                            {% empty %}
+                            <li class="text-gray-400 italic">No work experience yet.</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </a>
+                <div class="px-6 py-4 border-t border-gray-700 flex gap-2 justify-center space-x-6">
+                    {% if user.linkedin %}
+                    <a href="{{ user.linkedin }}" target="_blank"
+                        class="text-gray-300 hover:text-cyan-400 transition-colors duration-300">
+                        <i class="fab fa-linkedin fa-lg"></i>
+                    </a>
+                    {% endif %}
+                    {% if user.github %}
+                    <a href="{{ user.github }}" target="_blank"
+                        class="text-gray-300 hover:text-cyan-400 transition-colors duration-300">
+                        <i class="fab fa-github fa-lg"></i>
+                    </a>
+                    {% endif %}
+                    {% if user.website %}
+                    <a href="{{ user.website }}" target="_blank"
+                        class="text-gray-300 hover:text-cyan-400 transition-colors duration-300">
+                        <i class="fas fa-globe fa-lg"></i>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,308 @@
+{% load static %}
+{% load tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <title>{% block title %}Portman{% endblock %}</title>
+
+    {% tailwind_css %}
+    <style>
+        :root {
+            --glass-bg: rgba(15, 23, 42, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            --primary: rgb(34, 211, 238);
+            --primary-dark: rgb(8, 145, 178);
+            --secondary: rgb(192, 132, 252);
+            --accent: rgb(14, 165, 233);
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            font-family: 'Inter', sans-serif;
+            color: #f8fafc;
+            min-height: 100vh;
+        }
+
+        .glass {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: var(--glass-shadow);
+            border-radius: 1rem;
+        }
+
+        .glass-nav {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .glass-card {
+            background: rgba(30, 41, 59, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.2);
+            border-radius: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px 0 rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .glow {
+            box-shadow: 0 0 15px rgba(34, 211, 238, 0.5);
+        }
+
+        .glow-text {
+            text-shadow: 0 0 10px rgba(34, 211, 238, 0.7);
+        }
+
+        .dropdown-menu {
+            display: none;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(34, 211, 238, 0.5);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Animated gradient background */
+        .gradient-bg {
+            background: linear-gradient(-45deg, #0f172a, #1e293b, #0e7490, #0c4a6e);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+    </style>
+    {% block scripts %}
+    <!-- Add any global JS here -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const messages = document.querySelectorAll('#flash-messages .mb-4');
+            messages.forEach(function (message) {
+                setTimeout(function () {
+                    message.classList.add('opacity-0');
+                }, 5000); // Wait 5 seconds before fading the message
+            });
+        });
+    </script>
+    {% endblock %}
+</head>
+
+<body class="gradient-bg">
+    <nav class="glass-nav fixed w-full z-50">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="relative flex h-16 items-center justify-between">
+                <!-- Mobile menu button -->
+                <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+                    <button type="button"
+                        class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:text-cyan-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-cyan-400"
+                        aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="absolute -inset-0.5"></span>
+                        <span class="sr-only">Open main menu</span>
+                        <i class="fas fa-bars h-6 w-6"></i>
+                    </button>
+                </div>
+
+                <!-- Logo and Navigation Links -->
+                <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+                    <div class="flex flex-shrink-0 items-center">
+                        <span class="text-2xl font-bold text-cyan-400 tracking-wide">PORTMAN</span>
+                    </div>
+                    <div class="hidden sm:ml-6 sm:block">
+                        <div class="flex space-x-4">
+                            <a href="{% url 'home' %}"
+                                class="text-gray-300 hover:text-cyan-400 rounded-md px-3 py-2 text-sm font-medium transition-colors duration-300">Home</a>
+                            <a href="{% url 'dashboard' %}"
+                                class="text-gray-300 hover:text-cyan-400 rounded-md px-3 py-2 text-sm font-medium transition-colors duration-300"
+                                aria-current="page">Dashboard</a>
+                            <a href="#"
+                                class="text-gray-300 hover:text-cyan-400 rounded-md px-3 py-2 text-sm font-medium transition-colors duration-300">Projects</a>
+                            <a href="#"
+                                class="text-gray-300 hover:text-cyan-400 rounded-md px-3 py-2 text-sm font-medium transition-colors duration-300">Calendar</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notification and Profile -->
+                <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                    <!-- Notification button -->
+                    <div class="relative group">
+                        <!-- Notification Button -->
+                        <button
+                            class="relative rounded-full p-2 text-gray-400 hover:text-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400 transition-colors duration-300">
+                            <span class="sr-only">View notifications</span>
+                            <i class="fas fa-bell h-6 w-6"></i>
+                        </button>
+
+                        <!-- Notification Dropdown -->
+                        <div
+                            class="absolute right-0 mt-2 w-64 glass rounded-lg shadow-lg border border-gray-700 opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto group-focus-within:opacity-100 group-focus-within:scale-100 group-focus-within:pointer-events-auto transform transition-all duration-200 origin-top-right">
+                            <div class="px-4 py-2 text-sm text-cyan-400 border-b border-gray-700">
+                                Notifications
+                            </div>
+                            <a href="#"
+                                class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-cyan-400 transition-colors duration-300">
+                                New comment on your post
+                            </a>
+                            <a href="#"
+                                class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-cyan-400 transition-colors duration-300">
+                                Someone liked your photo
+                            </a>
+                            <a href="#"
+                                class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-cyan-400 transition-colors duration-300">
+                                5 new followers
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Profile dropdown -->
+                    <div class="relative ml-3 group">
+                        <div>
+                            <button type="button"
+                                class="relative flex rounded-full focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-gray-800">
+                                <span class="absolute -inset-1.5"></span>
+                                <span class="sr-only">Open user menu</span>
+                                {% if user.is_authenticated %}
+                                {% if user.profile.profile_picture %}
+                                <img class="h-10 w-10 rounded-full object-cover border-2 border-cyan-400 hover:border-purple-400 transition duration-300 glow"
+                                    src="{{ user.profile.profile_picture.url }}" alt="Profile Picture">
+                                {% else %}
+                                <span
+                                    class="h-10 w-10 rounded-full bg-gray-700 flex items-center justify-center border-2 border-cyan-400 hover:border-purple-400 transition duration-300">
+                                    <i class="fas fa-user text-gray-300"></i>
+                                </span>
+                                {% endif %}
+                                {% else %}
+                                <span
+                                    class="h-10 w-10 rounded-full bg-gray-700 flex items-center justify-center border-2 border-cyan-400 hover:border-purple-400 transition duration-300">
+                                    <i class="fas fa-user text-gray-300"></i>
+                                </span>
+                                {% endif %}
+                            </button>
+                        </div>
+
+                        {% if user.is_authenticated %}
+                        <!-- Dropdown for logged-in users -->
+                        <div
+                            class="absolute right-0 z-20 mt-2 w-48 glass rounded-lg shadow-lg border border-gray-700 opacity-0 group-hover:opacity-100 scale-95 group-hover:scale-100 transform transition-all duration-200 origin-top-right">
+                            <a href="{% url 'dashboard' %}"
+                                class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-cyan-400 rounded-t-lg transition-colors duration-300">
+                                Your Profile
+                            </a>
+                            <a href="#"
+                                class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-cyan-400 transition-colors duration-300">
+                                Settings
+                            </a>
+                            <form action="{% url 'logout' %}" method="post" class="block w-full m-0 p-0">
+                                {% csrf_token %}
+                                <button type="submit"
+                                    class="block w-full px-4 py-2 text-sm text-red-400 hover:bg-gray-700 rounded-b-lg text-left transition-colors duration-300">
+                                    Log Out
+                                </button>
+                            </form>
+                        </div>
+                        {% else %}
+                        <!-- Dropdown for guests -->
+                        <div
+                            class="absolute right-0 mt-2 w-48 glass rounded-lg shadow-lg border border-gray-700 opacity-0 group-hover:opacity-100 scale-95 group-hover:scale-100 transform transition-all duration-200 origin-top-right">
+                            <a href="{% url 'login' %}"
+                                class="block px-4 py-2 text-sm text-cyan-400 hover:bg-gray-700 rounded-t-lg transition-colors duration-300">Log
+                                in</a>
+                            <a href="{% url 'register' %}"
+                                class="block px-4 py-2 text-sm text-purple-400 hover:bg-gray-700 rounded-b-lg transition-colors duration-300">Register</a>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile menu, show/hide based on menu state. -->
+            <div class="sm:hidden" id="mobile-menu">
+                <div class="space-y-1 px-2 pb-3 pt-2">
+                    <a href="{% url 'home' %}"
+                        class="text-gray-300 hover:text-cyan-400 block rounded-md px-3 py-2 text-base font-medium transition-colors duration-300">Home</a>
+                    <a href="{% url 'dashboard' %}"
+                        class="text-gray-300 hover:text-cyan-400 block rounded-md px-3 py-2 text-base font-medium transition-colors duration-300"
+                        aria-current="page">Dashboard</a>
+                    <a href="#"
+                        class="text-gray-300 hover:text-cyan-400 block rounded-md px-3 py-2 text-base font-medium transition-colors duration-300">Projects</a>
+                    <a href="#"
+                        class="text-gray-300 hover:text-cyan-400 block rounded-md px-3 py-2 text-base font-medium transition-colors duration-300">Calendar</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto pt-20 px-4 sm:px-6 lg:px-8">
+        {% block content %}{% endblock %}
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        document.addEventListener('DOMContentLoaded', function () {
+            const mobileMenuButton = document.querySelector('[aria-controls="mobile-menu"]');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', function () {
+                    const expanded = this.getAttribute('aria-expanded') === 'true';
+                    this.setAttribute('aria-expanded', !expanded);
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

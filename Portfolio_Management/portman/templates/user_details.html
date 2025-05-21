@@ -1,0 +1,253 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ profile.user.get_full_name }}'s Portfolio{% endblock %}
+
+{% block content %}
+
+<div x-data="{ darkMode: true, showModal: false }" :class="{ 'dark': darkMode }">
+    <div class="min-h-screen bg-white dark:bg-gray-900 flex transition-colors duration-300">
+        <!-- Sidebar -->
+        <aside class="w-72 bg-gray-100 dark:bg-gray-800 p-6 transform transition-all duration-300 ease-in-out hover:shadow-xl">
+    <div class="flex flex-col items-center mb-6">
+        {% if profile.profile_picture %}
+            <img src="{{ profile.profile_picture.url }}" alt="{{ profile.user.get_full_name }}" class="rounded-full w-32 h-32 object-cover mb-4 border-4 border-blue-500 transition-transform duration-300 transform hover:scale-105">
+        {% else %}
+            <div class="rounded-full w-32 h-32 bg-blue-500 flex items-center justify-center text-4xl font-bold text-white mb-4 transition-transform duration-300 transform hover:scale-105">
+               <i> {{ profile.user.get_full_name }}</i>
+            </div>
+        {% endif %}
+        
+        <h1 class="text-2xl font-bold text-gray-800 dark:text-white mb-2"><i>{{ profile.user.get_full_name }}</i></h1>
+        <strong><em><p class="text-gray-600 dark:text-gray-300 text-center mb-2">{{ profile.user.username }}</p></em></strong>
+        <p class="text-gray-600 dark:text-gray-300 text-center">{{ profile.positoin }}</p>
+    </div>
+    <div class="mb-6">
+        <ul class="text-sm text-gray-600 dark:text-gray-300 space-y-2">
+            {% for experience in profile.work_experiences.all %}
+                <li class="flex flex-col bg-white dark:bg-gray-700 p-3 rounded-lg shadow-md transition-all duration-300 hover:shadow-lg">
+                    <strong class="text-gray-800 dark:text-gray-100">{{ experience.position }}</strong>
+                    <span class="text-gray-600 dark:text-gray-400">at <em>{{ experience.company_name }}</em></span>
+                </li>
+            {% empty %}
+                <li class="text-gray-600 dark:text-gray-400 italic">No work experience yet.</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="flex justify-center space-x-4 mb-6">
+        {% if profile.github %}
+            <a href="{{ profile.github }}" target="_blank" class="text-gray-600 hover:text-blue-500 dark:text-gray-300 dark:hover:text-blue-400 transition-colors duration-300">
+                <i class="fab fa-github fa-lg"></i>
+            </a>
+        {% endif %}
+        {% if profile.linkedin %}
+            <a href="{{ profile.linkedin }}" target="_blank" class="text-gray-600 hover:text-blue-500 dark:text-gray-300 dark:hover:text-blue-400 transition-colors duration-300">
+                <i class="fab fa-linkedin fa-lg"></i>
+            </a>
+        {% endif %}
+        {% if profile.website %}
+            <a href="{{ profile.website }}" target="_blank" class="text-gray-600 hover:text-blue-500 dark:text-gray-300 dark:hover:text-blue-400 transition-colors duration-300">
+                <i class="fas fa-globe fa-lg"></i>
+            </a>
+        {% endif %}
+    </div>
+    <strong><em><div class="text-gray-600 dark:text-gray-300 mb-6">
+        <p class="mb-2 flex items-center"><i class="fas fa-envelope mr-2 text-blue-500"></i>{{ profile.user.email }}</p>
+        <p class="mb-2 flex items-center"><i class="fas fa-phone mr-2 text-blue-500"></i>{{ profile.phone_number }}</p>
+        <p class="mb-2 flex items-center"><i class="fas fa-map-marker-alt mr-2 text-blue-500"></i>{{ profile.location }}</p>
+    </div></em></strong>
+    
+</aside>
+
+        <!-- Main Content -->
+    <main class="flex-1">
+    <header class="bg-white dark:bg-gray-800 shadow-md transition-all duration-300">
+        <div class="container mx-auto px-6 py-4 ">
+            <div class="flex justify-between items-center">
+                <nav>
+                    <ul class="flex space-x-4">
+                        <li><a href="#about" class="text-gray-600 hover:text-blue-500 dark:text-gray-300 dark:hover:text-blue-400 transition-colors duration-300">About</a></li>
+                        <li><a href="#projects" class="text-gray-600 hover:text-blue-500 dark:text-gray-300 dark:hover:text-blue-400 transition-colors duration-300">Projects</a></li>
+                        <li><a href="#skills" class="text-gray-600 hover:text-blue-500 dark:text-gray-300 dark:hover:text-blue-400 transition-colors duration-300">Skills</a></li>
+                        <li><a href="#contact" class="text-gray-600 hover:text-blue-500 dark:text-gray-300 dark:hover:text-blue-400 transition-colors duration-300">Contact</a></li>
+                    </ul>
+                </nav>
+                <button @click="darkMode = !darkMode" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <svg x-show="!darkMode" class="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                    <svg x-show="darkMode" class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-6 py-8">
+        <section id="about" class="mb-16 ">
+            <h2 class="text-3xl font-bold mb-8 text-gray-800 dark:text-white">About Me</h2>
+            <p class="text-gray-600 dark:text-gray-300">{{ profile.bio }}</p>
+        </section>
+
+        
+                <!-- Add Project Modal -->
+
+        <section id="projects" class="mb-16">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-800 dark:text-white">Projects</h2>
+                {% if request.user.is_authenticated and request.user.id == profile.user.id %}
+                <button @click="showModal = true" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <i class="fas fa-plus mr-2"></i>Add Project
+                </button>
+                {% endif %}
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                {% for project in profile.projects.all %}
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transition-all duration-300 transform hover:scale-105 hover:shadow-xl">
+        <div class="p-6">
+            <h3 class="text-xl font-semibold mb-2 text-gray-800 dark:text-white">{{ project.title }}</h3>
+            <p class="text-gray-600 dark:text-gray-300 mb-4">{{ project.description|truncatewords:20 }}</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">Tools: {{ project.tools_used }}</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">
+                {{ project.start_date|date:"M Y" }} - 
+                {% if project.end_date %}
+                    {{ project.end_date|date:"M Y" }}
+                {% else %}
+                    Present
+                {% endif %}
+            </p>
+            <div class="flex justify-end space-x-4">
+                {% if project.live_url %}
+                    <a href="{{ project.live_url }}" target="_blank" class="text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 transition-colors duration-300">
+                        <i class="fas fa-external-link-alt fa-lg"></i>
+                    </a>
+                {% endif %}
+                <a href="{{ project.repository_url }}" target="_blank" class="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-300">
+                    <i class="fab fa-github fa-lg"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+{% empty %}
+    <p class="text-gray-600 dark:text-gray-300">No projects added yet.</p>
+{% endfor %}
+            </div>
+        </section>
+
+            <!--Skills section-->       
+
+        <section id="skills" class="mb-16 ">
+            <h2 class="text-3xl font-bold mb-8 text-gray-800 dark:text-white">Skills</h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {% for skill in profile.skills.all %}
+                    <div class="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-md transition-all duration-300 hover:shadow-lg">
+                        <h3 class="text-lg font-semibold mb-2 text-gray-800 dark:text-white">{{ skill.name }}</h3>
+                        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 mb-2">
+                            <div class="bg-blue-600 h-2.5 rounded-full transition-all duration-500 ease-out" style="width: 
+                            {% if skill.level == 'Beginner' %}25%
+                            {% elif skill.level == 'Intermediate' %}50%
+                            {% elif skill.level == 'Advanced' %}75%
+                            {% else %}100%{% endif %}">
+                        </div>
+                        </div>
+                        <p class="text-sm text-gray-600 dark:text-gray-300">{{ skill.level }}</p>
+                    </div>
+                {% empty %}
+                    <p class="text-gray-600 dark:text-gray-300">No skills added yet.</p>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!--Contact Me Section-->
+
+        <section id="contact" class="mb-16 ">
+            <h2 class="text-3xl font-bold mb-8 text-gray-800 dark:text-white">Contact Me</h2>
+            <form action="#" method="POST" class="max-w-lg mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 transform transition-all duration-500 hover:scale-105 ">
+                {% csrf_token %}
+                <div class="mb-4">
+                    <label for="name" class="block text-gray-700 dark:text-gray-300 font-bold mb-2">Name</label>
+                    <input type="text" id="name" name="name" required class="w-full px-3 py-2 text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-300">
+                </div>
+                <div class="mb-4">
+                    <label for="email" class="block text-gray-700 dark:text-gray-300 font-bold mb-2">Email</label>
+                    <input type="email" id="email" name="email" required class="w-full px-3 py-2 text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-300">
+                </div>
+                <div class="mb-4">
+                    <label for="message" class="block text-gray-700 dark:text-gray-300 font-bold mb-2">Message</label>
+                    <textarea id="message" name="message" rows="4" required class="w-full px-3 py-2 text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-300"></textarea>
+                </div>
+                <div class="flex justify-end">
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300">
+                        Send Message
+                    </button>
+                </div>
+            </form>
+        </section>
+    </div>
+</main>
+
+<!-- Add Project Modal -->
+<div x-show="showModal" class="fixed inset-0 z-50 overflow-y-auto" style="display: none;">
+    <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <!-- Background overlay -->
+        <div x-show="showModal" class="fixed inset-0 transition-opacity" aria-hidden="true">
+            <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+        </div>
+
+        <!-- Modal panel -->
+        <div x-show="showModal" class="inline-block align-bottom bg-white dark:bg-gray-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+            <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div class="sm:flex sm:items-start">
+                    <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">Add New Project</h3>
+                        <div class="mt-2">
+                            <form action="{% url 'add_project' %}" method="POST">
+                                {% csrf_token %}
+                                <div class="mb-4">
+                                    <label for="title" class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Title</label>
+                                    <input type="text" id="title" name="title" required class="w-full px-3 py-2 text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded-lg focus:outline-positoin focus:ring-2 focus:ring-blue-500 transition-colors duration-300">
+                                </div>
+                                <div class="mb-4">
+                                    <label for="description" class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Description</label>
+                                    <textarea id="description" name="description" rows="3" required class="w-full px-3 py-2 text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-300"></textarea>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="tools_used" class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Tools Used</label>
+                                    <input type="text" id="tools_used" name="tools_used" required class="w-full px-3 py-2 text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-300">
+                                </div>
+                                <div class="mb-4">
+                                    <label for="start_date" class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Start Date</label>
+                                    <input type="date" id="start_date" name="start_date" required class="w-full px-3 py-2 text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-300">
+                                </div>
+                                <div class="mb-4">
+                                    <label for="end_date" class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">End Date</label>
+                                    <input type="date" id="end_date" name="end_date" class="w-full px-3 py-2 text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-300">
+                                </div>
+                                <div class="mb-4">
+                                    <label for="repository_url" class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">GitHub URL</label>
+                                    <input type="url" id="repository_url" name="repository_url" required class="w-full px-3 py-2 text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-300">
+                                </div>
+                                <div class="mb-4">
+                                    <label for="live_url" class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Live URL</label>
+                                    <input type="url" id="live_url" name="live_url" class="w-full px-3 py-2 text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-300">
+                                </div>
+                                <div class="flex justify-end mt-4">
+                                    <button type="button" @click="showModal = false" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md mr-2 hover:bg-gray-400 transition-colors duration-300">Cancel</button>
+                                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-300">Add Project</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ block.super }}
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+{% endblock %}
+

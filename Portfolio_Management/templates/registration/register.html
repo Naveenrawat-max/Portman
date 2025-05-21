@@ -1,0 +1,131 @@
+{% extends "base.html" %} 
+{% load static %}
+
+{% block title %}Register{% endblock %} 
+
+{% block content %}
+
+<div class="min-h-screen flex items-center justify-center px-4 py-12 mt-32 pt-32 bg-gradient-to-br from-cyan-500 to-purple-600">
+    <!-- Background Gradient -->
+    <div class="w-96 max-w-md mt-32 pt-32 py-10">
+        <!-- Logo and Title Container - No Border -->
+        <div class="text-center mt-32 pt-32 py-10">
+            <a href="{% url 'home' %}" class="inline-block">
+                <div class="flex items-center justify-center h-20 w-20 rounded-full bg-gradient-to-br from-cyan-500 to-purple-600 mx-auto mb-4 shadow-lg glow">
+                    <span class="text-4xl font-bold glow-text text-white">P</span>
+                </div>
+            </a>
+            <h1 class="text-3xl font-bold text-white glow-text">PORTMAN</h1>
+            <p class="text-gray-400 mt-2">Create your profile</p>
+        </div>
+        
+        <!-- Form Container - With Border -->
+        <div class="bg-transparent backdrop-blur-sm border-2 border-black rounded-xl shadow-2xl overflow-hidden">
+            <!-- Accent Bar -->
+            <div class="h-2 bg-gradient-to-r from-cyan-500 to-purple-600"></div>
+            
+            <div class="p-8">
+                <h2 class="text-xl font-semibold glow-text text-white mb-6">Create Account</h2>
+                
+                {% if messages %}
+                <div id="flash-messages" class="mb-6">
+                    {% for message in messages %}
+                    <div class="p-3 rounded-lg text-sm mb-3 {% if message.tags == 'success' %} bg-green-900/50 text-green-300 border border-green-700 {% elif message.tags == 'error' %} bg-red-900/50 text-red-300 border border-red-700 {% else %} bg-blue-900/50 text-blue-300 border border-blue-700 {% endif %}">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                
+                <form action="{% url 'register' %}" method="post" class="space-y-5">
+                    {% csrf_token %}
+                    
+                    <!-- Username Input -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-1">Username</label>
+                        <div class="flex items-center pr-2">
+                            <i class="fas fa-user text-gray-600 pr-2 text-lg mr-4"></i>
+                            <input type="text" name="username" required
+                                class="flex-1 px-2 py-2 bg-gradient-to-r from-gray-300 to-gray-100 text-gray-900 placeholder-gray-600 border-2 border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
+                                placeholder="Enter username">
+                        </div>
+                    </div>
+                    
+                    <!-- Email Input -->
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-300 mt-3">Email Address</label>
+                        <div class="flex items-center pr-2">
+                                <i class="fas fa-envelope text-gray-600 pr-2 text-lg mr-4"></i>
+                            <input type="email" name="email" id="email" required placeholder="your@email.com"
+                                class="flex-1 px-2 py-2 bg-gradient-to-r from-gray-300 to-gray-100 text-gray-900 placeholder-gray-600 border-2 border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent">
+                        </div>
+                    </div>
+                    
+                    <!-- Password Input -->
+                    <div>
+                        <label for="password1" class="block text-sm font-medium text-gray-300 mt-3">Password</label>
+                        <div class="flex items-center pr-2">
+                                <i class="fas fa-lock text-gray-600 pr-2 text-lg mr-4"></i>
+                            <input type="password" name="password1" id="password1" required placeholder="••••••••"
+                                class="flex-1 px-2 py-2 bg-gradient-to-r from-gray-300 to-gray-100 text-gray-900 placeholder-gray-600 border-2 border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent">
+                        </div>
+                    </div>
+                    
+                    <!-- Confirm Password Input -->
+                    <div>
+                        <label for="password2" class="block text-sm font-medium text-gray-300 mt-3">Confirm Password</label>
+                        <div class="flex items-center pr-2">
+                                <i class="fas fa-lock text-gray-600 pr-2 text-lg mr-4"></i>
+
+                            <input type="password" name="password2" id="password2" required placeholder="••••••••"
+                                class="flex-1 max-w-sm px-2 py-2 bg-gradient-to-r from-gray-300 to-gray-100 text-gray-900 placeholder-gray-600 border-2 border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent">
+                        </div>
+                    </div>
+                    
+                    <!-- Register Button -->
+                    <button type="submit"
+                        class="w-full py-3 bg-gradient-to-r glow-text from-cyan-500 to-purple-600 text-white font-medium rounded-lg hover:from-cyan-600 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-gray-900 transition-all duration-300 transform hover:scale-[1.02]">
+                        Create Account
+                    </button>
+                </form>
+                
+                <!-- Login Link -->
+                <div class="mt-6 text-center">
+                    <p class="text-sm text-gray-400">
+                        Already have an account?
+                        <a href="{% url 'login' %}" class="text-white hover:text-cyan-300 glow-text font-medium ml-1 transition-colors">
+                            Sign in
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="mt-8 text-center">
+            <div class="flex items-center justify-center gap-2 text-gray-400 text-sm">
+                <p>Powered by</p>
+                <a href="{% url 'home' %}" class="flex glow-text items-center gap-1 text-cyan-400 hover:underline">
+                    <i class="fas fa-code text-purple-400"></i>
+                    Django
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block scripts %}
+<script>
+  // Add this JavaScript at the bottom of your HTML template
+  document.addEventListener("DOMContentLoaded", function () {
+    const messages = document.querySelectorAll("#flash-messages .mb-3");
+
+    messages.forEach(function (message) {
+      setTimeout(function () {
+        message.classList.add("opacity-0");
+      }, 5000); // Wait 5 seconds before fading the message
+    });
+  });
+</script>
+{% endblock %} 
+{% endblock %}

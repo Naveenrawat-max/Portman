@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developer Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+</head>
+<body class="bg-slate-950 text-gray-100">
+    <main class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-emerald-400 mb-8">Developer Dashboard</h1>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Stats Cards -->
+            <div class="bg-gray-800 rounded-lg p-6 flex items-center justify-between">
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-400">Projects</h3>
+                    <p class="text-2xl font-bold text-white">12</p>
+                </div>
+                <i class="fas fa-code text-2xl text-purple-400"></i>
+            </div>
+            <div class="bg-gray-800 rounded-lg p-6 flex items-center justify-between">
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-400">Commits</h3>
+                    <p class="text-2xl font-bold text-white">238</p>
+                </div>
+                <i class="fas fa-code-branch text-2xl text-emerald-400"></i>
+            </div>
+            <div class="bg-gray-800 rounded-lg p-6 flex items-center justify-between">
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-400">Uptime</h3>
+                    <p class="text-2xl font-bold text-white">99.9%</p>
+                </div>
+                <i class="fas fa-chart-line text-2xl text-yellow-400"></i>
+            </div>
+            <div class="bg-gray-800 rounded-lg p-6 flex items-center justify-between">
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-400">Security</h3>
+                    <p class="text-2xl font-bold text-white">Strong</p>
+                </div>
+                <i class="fas fa-shield-alt text-2xl text-red-400"></i>
+            </div>
+        </div>
+
+        <div class="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Activity Feed -->
+            <div class="bg-gray-800 rounded-lg p-6">
+                <h2 class="text-xl font-semibold mb-4 text-emerald-400">Recent Activity</h2>
+                <ul class="space-y-4">
+                    <li class="border-l-2 border-gray-700 pl-4 py-2">
+                        <h4 class="font-semibold text-white">Deployed new feature</h4>
+                        <p class="text-sm text-gray-400">Successfully deployed the authentication module</p>
+                        <span class="text-xs text-gray-500">2 hours ago</span>
+                    </li>
+                    <li class="border-l-2 border-gray-700 pl-4 py-2">
+                        <h4 class="font-semibold text-white">Fixed critical bug</h4>
+                        <p class="text-sm text-gray-400">Resolved issue #127 in the payment gateway</p>
+                        <span class="text-xs text-gray-500">5 hours ago</span>
+                    </li>
+                    <li class="border-l-2 border-gray-700 pl-4 py-2">
+                        <h4 class="font-semibold text-white">Updated dependencies</h4>
+                        <p class="text-sm text-gray-400">Upgraded all packages to their latest versions</p>
+                        <span class="text-xs text-gray-500">Yesterday</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- System Resources -->
+            <div class="bg-gray-800 rounded-lg p-6">
+                <h2 class="text-xl font-semibold mb-4 text-emerald-400">System Resources</h2>
+                <div class="space-y-4">
+                    <div>
+                        <div class="flex items-center justify-between mb-1">
+                            <div class="flex items-center">
+                                <i class="fas fa-microchip text-emerald-400 mr-2"></i>
+                                <span class="text-sm font-medium text-gray-300">CPU Usage</span>
+                            </div>
+                            <span class="text-sm font-medium text-gray-300">65%</span>
+                        </div>
+                        <div class="w-full bg-gray-700 rounded-full h-2.5">
+                            <div class="bg-emerald-400 h-2.5 rounded-full" style="width: 65%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-1">
+                            <div class="flex items-center">
+                                <i class="fas fa-memory text-emerald-400 mr-2"></i>
+                                <span class="text-sm font-medium text-gray-300">Memory</span>
+                            </div>
+                            <span class="text-sm font-medium text-gray-300">48%</span>
+                        </div>
+                        <div class="w-full bg-gray-700 rounded-full h-2.5">
+                            <div class="bg-emerald-400 h-2.5 rounded-full" style="width: 48%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-1">
+                            <div class="flex items-center">
+                                <i class="fas fa-database text-emerald-400 mr-2"></i>
+                                <span class="text-sm font-medium text-gray-300">Storage</span>
+                            </div>
+                            <span class="text-sm font-medium text-gray-300">72%</span>
+                        </div>
+                        <div class="w-full bg-gray-700 rounded-full h-2.5">
+                            <div class="bg-emerald-400 h-2.5 rounded-full" style="width: 72%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Terminal Section -->
+        <div class="mt-12 bg-black rounded-lg p-4">
+            <div class="flex items-center mb-2">
+                <i class="fas fa-terminal text-emerald-400 mr-2"></i>
+                <h2 class="text-lg font-semibold text-emerald-400">Terminal</h2>
+            </div>
+            <div class="font-mono text-sm">
+                <p class="text-green-500">$ npm run build</p>
+                <p class="text-gray-400">Building project...</p>
+                <p class="text-gray-400">Optimizing assets...</p>
+                <p class="text-emerald-400">Build completed successfully.</p>
+                <p class="text-purple-400">$ _</p>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
